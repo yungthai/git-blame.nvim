@@ -265,7 +265,16 @@ local function format_blame_text(info, template)
     text = text:gsub("<committer%-date>", format_date(info.committer_date))
     text = text:gsub("<date>", format_date(info.date))
 
-    local summary_escaped = info.summary:gsub("%%", "%%%%")
+    local summary_escaped = ""
+    local pattern = "%%"
+    if string.match(info.summary, pattern) then
+        -- substitute % with %% to avoid lualine error(s)
+        -- side effect:
+        -- git-blame will show 2 consecutive '%' characters i.e. "%%"
+        summary_escaped = info.summary:gsub(pattern, "%%%%%%%%")
+    else
+        summary_escaped = info.summary
+    end
     text = text:gsub("<summary>", summary_escaped)
 
     text = text:gsub("<sha>", info.sha and string.sub(info.sha, 1, 7) or "")
