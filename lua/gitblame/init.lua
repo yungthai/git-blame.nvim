@@ -318,11 +318,11 @@ local function get_blame_text(filepath, info, callback)
 
         info.author = "You"
         info.committer = "You"
-        info.summary = "Not Commited Yet"
+        info.summary = "Not Committed Yet"
 
         -- NOTE: While this works okay-ish, I'm not sure this is the behavior
         -- people expect, since sometimes git-blame just doesn't provide
-        -- the date of uncommited changes.
+        -- the date of uncommitted changes.
         info.date = info.date or os.time()
         info.committer_date = info.committer_date or os.time()
 
